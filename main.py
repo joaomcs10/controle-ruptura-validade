@@ -41,6 +41,22 @@ def pedir_nome(pergunta):
     return resposta
 
 
+def mostrar_tabela(titulo, lista, chave, rotulo):
+
+    print(titulo)
+
+    print(f'{"PRODUTO":<20}  {rotulo}')
+
+    print('-' * 36)
+
+    if not lista:
+
+        print('Nenhum produto cadastrado.')
+    for item in lista:
+
+        print(f'{item['produto']:<20}  {item[chave]}')
+
+
 # lista de dicionario vazia que recebera os dados pedidos
 em_ruptura = []
 proximo_a_ruptura = []
