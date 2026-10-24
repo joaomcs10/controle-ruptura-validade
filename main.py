@@ -42,7 +42,7 @@ def pedir_nome(pergunta):
 
 
 def mostrar_tabela(titulo, lista, chave, rotulo):
-
+    """Cria tabela com os dados """
     print(titulo)
 
     print(f'{"PRODUTO":<20}  {rotulo}')
@@ -106,10 +106,8 @@ while resposta == "sim":
         print('Cadastro descartado. Digite os dados novamente')
 
 print('Obrigado pela resposta')
-print('Produtos em Ruptura')
-print(em_ruptura)
-print('Produtos Próximos a Ruptura')
-print(proximo_a_ruptura)
+mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
+mostrar_tabela('PRODUTOS PRÓXIMOS DA RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
 
 dados = {
     'em_ruptura': em_ruptura,
