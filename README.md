@@ -17,7 +17,9 @@ Este projeto nasceu dessa lacuna: registrar apenas o que está em risco e deixar
 - Validação das entradas: respostas sim/não, números inteiros e nome não vazio
 - Confirmação dos dados antes de gravar cada registro
 - Salvamento dos registros em arquivo JSON (`estoque.json`)
-
+- Carregamento do `estoque.json` ao abrir, mostrando o que já estava registrado
+- Exibição dos produtos em formato de tabela
+- 
 ## Como rodar
 
 Requisitos: Python 3.
