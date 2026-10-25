@@ -1,17 +1,19 @@
 import json
+import os
+
 
 def perguntar_sim_ou_nao(pergunta):
-    """strip e lower: retira os espaços antes e depois, padroniza a palavra para minuscula"""
-    resposta = input(pergunta).strip().lower()
+    """Pergunta ao usuário e só aceita sim, nao ou não. Devolve a resposta em minúsculas."""
+    digitado = input(pergunta).strip().lower()
 
     # repete o loop ate a resposta ser valida, nao quebrando o codigo caso seja digitado outra palavra
-    while resposta not in ['sim', 'nao','não']:
+    while digitado not in ['sim', 'nao','não']:
 
         print('Resposta invalida! digite sim ou nao')
 
-        resposta = input(pergunta).strip().lower()
+        digitado = input(pergunta).strip().lower()
 
-    return resposta
+    return digitado
 
 
 def pedir_numero(pergunta):
@@ -30,19 +32,19 @@ def pedir_numero(pergunta):
 def pedir_nome(pergunta):
     """Impede que seja deixado em branco a entrada"""
 
-    resposta = input(pergunta).strip()
+    nome = input(pergunta).strip()
 
-    while resposta == '':
+    while nome == '':
 
         print('O nome nao pode ficar vazio')
 
-        resposta = input(pergunta).strip()
+        nome = input(pergunta).strip()
 
-    return resposta
+    return nome
 
 
 def mostrar_tabela(titulo, lista, chave, rotulo):
-    """Cria tabela com os dados """
+    """Mostra uma lista de produtos em formato de tabela."""
     print(titulo)
 
     print(f'{"PRODUTO":<20}  {rotulo}')
@@ -54,12 +56,37 @@ def mostrar_tabela(titulo, lista, chave, rotulo):
         print('Nenhum produto cadastrado.')
     for item in lista:
 
-        print(f'{item['produto']:<20}  {item[chave]}')
+        print(f'{item["produto"]:<20}  {item[chave]}')
+
+# os dois caminhos (com ou sem arquivo) terminam com as duas listas criadas
+if os.path.exists('estoque.json'):
+
+    print('Arquivo encontrado. Carregando dados..')
+    print()
+
+    with open('estoque.json','r',encoding='utf-8') as arquivo:
+
+        dados = json.load(arquivo)
+
+    # json.load devolve o dicionario salvo; cada chave em sua lista
+    em_ruptura = dados['em_ruptura']
+    proximo_a_ruptura = dados['proximo_a_ruptura']
+
+    # Mostra o que ja estava registrado antes de pedir produtos novos
+    mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
+    print()
+    mostrar_tabela('PRODUTOS PRÓXIMOS DA RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
+    print()
+
+else:
+
+    print('Ainda não existem dados salvos. Iniciando programa...')
+
+    # primeira execução: começa com as listas vazias
+    em_ruptura = []
+    proximo_a_ruptura = []
 
 
-# lista de dicionario vazia que recebera os dados pedidos
-em_ruptura = []
-proximo_a_ruptura = []
 
 resposta = perguntar_sim_ou_nao('existe algum produto em ruptura na sua loja?(sim/não) ')
 
