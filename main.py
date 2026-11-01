@@ -2,31 +2,7 @@ import json
 import os
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
 from exibicao import mostrar_tabela
-
-def remover_item(lista,nome):
-
-    for item in lista:
-
-        if item['produto'].lower() == nome.lower():
-
-           confirmar=perguntar_sim_ou_nao(f"Deseja realmente remover {item['produto']}(sim/não)?")
-
-           if confirmar == 'sim':
-
-               lista.remove(item)
-
-               print('Item removido com sucesso.')
-
-               return item
-
-           print('Remoção cancelada.')
-
-           return None
-
-    print(f'O {nome} não consta no sistema')
-
-    return None
-
+from estoque import remover_item
 
 # os dois caminhos (com ou sem arquivo) terminam com as duas listas criadas
 if os.path.exists('estoque.json'):
