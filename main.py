@@ -1,50 +1,7 @@
 import json
 import os
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
-
-
-def pedir_numero(pergunta):
-    """Pede um numero inteiro e so aceita digitos"""
-    valor = input(pergunta).strip()
-
-    while not valor.isdigit():
-
-        print('Resposta invalida! digite apenas numero')
-
-        valor = input(pergunta).strip()
-
-    return int(valor)
-
-
-def pedir_nome(pergunta):
-    """Impede que seja deixado em branco a entrada"""
-
-    nome = input(pergunta).strip()
-
-    while nome == '':
-
-        print('O nome nao pode ficar vazio')
-
-        nome = input(pergunta).strip()
-
-    return nome
-
-
-def mostrar_tabela(titulo, lista, chave, rotulo):
-    """Mostra uma lista de produtos em formato de tabela."""
-    print(titulo)
-
-    print(f'{"PRODUTO":<20}  {rotulo}')
-
-    print('-' * 36)
-
-    if not lista:
-
-        print('Nenhum produto cadastrado.')
-    for item in lista:
-
-        print(f'{item["produto"]:<20}  {item[chave]}')
-
+from exibicao import mostrar_tabela
 
 def remover_item(lista,nome):
 
