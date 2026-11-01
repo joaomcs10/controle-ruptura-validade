@@ -1,19 +1,6 @@
 import json
 import os
-
-
-def perguntar_sim_ou_nao(pergunta):
-    """Pergunta ao usuário e só aceita sim, nao ou não. Devolve a resposta em minúsculas."""
-    digitado = input(pergunta).strip().lower()
-
-    # repete o loop ate a resposta ser valida, nao quebrando o codigo caso seja digitado outra palavra
-    while digitado not in ['sim', 'nao','não']:
-
-        print('Resposta invalida! digite sim ou nao')
-
-        digitado = input(pergunta).strip().lower()
-
-    return digitado
+from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
 
 
 def pedir_numero(pergunta):
