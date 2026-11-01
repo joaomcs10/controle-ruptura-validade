@@ -58,6 +58,32 @@ def mostrar_tabela(titulo, lista, chave, rotulo):
 
         print(f'{item["produto"]:<20}  {item[chave]}')
 
+
+def remover_item(lista,nome):
+
+    for item in lista:
+
+        if item['produto'].lower() == nome.lower():
+
+           confirmar=perguntar_sim_ou_nao(f"Deseja realmente remover {item['produto']}(sim/não)?")
+
+           if confirmar == 'sim':
+
+               lista.remove(item)
+
+               print('Item removido com sucesso.')
+
+               return item
+
+           print('Remoção cancelada.')
+
+           return None
+
+    print(f'O {nome} não consta no sistema')
+
+    return None
+
+
 # os dois caminhos (com ou sem arquivo) terminam com as duas listas criadas
 if os.path.exists('estoque.json'):
 
@@ -78,6 +104,32 @@ if os.path.exists('estoque.json'):
     mostrar_tabela('PRODUTOS PRÓXIMOS DA RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
     print()
 
+    checagem = perguntar_sim_ou_nao('Algum Produto da lista Em ruptura ja chegou na loja?(sim/não): ')
+
+    while checagem == 'sim':
+
+        nome = pedir_nome('Digite o nome do produto: ')
+
+        remover_item(em_ruptura,nome)
+
+        checagem = perguntar_sim_ou_nao('Mais algum produto saiu?(sim/não): ')
+
+    checagem_2 = perguntar_sim_ou_nao('Algum Produto da lista Proximo a Ruptura entrou em ruptura?(sim/não): ')
+
+    while checagem_2 == 'sim':
+
+        nome = pedir_nome('Digite o nome do produto: ')
+
+        removido = remover_item(proximo_a_ruptura,nome)
+
+        if removido:
+
+            em_ruptura.append({'produto':removido['produto'], 'dias': 1})
+
+            print(f'{removido["produto"]} foi transferido para a lista de ruptura.')
+
+        checagem_2 = perguntar_sim_ou_nao('Mais algum produto que entrou em ruptura?(sim/não)')
+
 else:
 
     print('Ainda não existem dados salvos. Iniciando programa...')
@@ -85,7 +137,6 @@ else:
     # primeira execução: começa com as listas vazias
     em_ruptura = []
     proximo_a_ruptura = []
-
 
 
 resposta = perguntar_sim_ou_nao('existe algum produto em ruptura na sua loja?(sim/não) ')
