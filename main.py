@@ -1,24 +1,14 @@
-import json
-import os
-
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
 from exibicao import mostrar_tabela
 from estoque import remover_item
-from armazenamento import salvar_estoque
+from armazenamento import salvar_estoque,carregar_estoque
 
-# os dois caminhos (com ou sem arquivo) terminam com as duas listas criadas
-if os.path.exists('estoque.json'):
+em_ruptura, proximo_a_ruptura = carregar_estoque()
 
-    print('Arquivo encontrado. Carregando dados..')
+if em_ruptura or proximo_a_ruptura:
+
+    print('Dados carregando...')
     print()
-
-    with open('estoque.json','r',encoding='utf-8') as arquivo:
-
-        dados = json.load(arquivo)
-
-    # json.load devolve o dicionario salvo; cada chave em sua lista
-    em_ruptura = dados['em_ruptura']
-    proximo_a_ruptura = dados['proximo_a_ruptura']
 
     # Mostra o que ja estava registrado antes de pedir produtos novos
     mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
@@ -54,7 +44,7 @@ if os.path.exists('estoque.json'):
 
 else:
 
-    print('Ainda não existem dados salvos. Iniciando programa...')
+    print('Nenhum produto registrado. Iniciando programa...')
 
     # primeira execução: começa com as listas vazias
     em_ruptura = []
