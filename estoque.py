@@ -1,26 +1,24 @@
 from entrada import perguntar_sim_ou_nao
 
-def remover_item(lista,nome):
 
+def remover_item(lista, nome):
     for item in lista:
 
         if item['produto'].lower() == nome.lower():
 
-           confirmar=perguntar_sim_ou_nao(f"Deseja realmente remover {item['produto']}(sim/não)?")
+            confirmar = perguntar_sim_ou_nao(f"Deseja realmente remover {item['produto']}(sim/não)?")
 
-           if confirmar == 'sim':
+            if confirmar == 'sim':
+                lista.remove(item)
 
-               lista.remove(item)
+                print('Item removido com sucesso.')
 
-               print('Item removido com sucesso.')
+                return item
 
-               return item
+            print('Remoção cancelada.')
 
-           print('Remoção cancelada.')
-
-           return None
+            return None
 
     print(f'O {nome} não consta no sistema')
 
     return None
-

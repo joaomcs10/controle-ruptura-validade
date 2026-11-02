@@ -1,8 +1,10 @@
 import json
 import os
+
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
 from exibicao import mostrar_tabela
 from estoque import remover_item
+from armazenamento import salvar_estoque
 
 # os dois caminhos (com ou sem arquivo) terminam com as duas listas criadas
 if os.path.exists('estoque.json'):
@@ -67,7 +69,7 @@ while resposta == 'sim':
 
     dias = pedir_numero('Digite quantos dias esta em ruptura:')
 
-    print(f'confirme os dados: produto: {produto} em falta: {dias} dias')
+    print(f'confirme os dados:\n produto: {produto} em falta: {dias} dias')
     entrada = perguntar_sim_ou_nao('Esta correto?(sim/nao) ')
 
     if entrada == 'sim':
@@ -107,10 +109,4 @@ print('Obrigado pela resposta')
 mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
 mostrar_tabela('PRODUTOS PRÓXIMOS DA RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
 
-dados = {
-    'em_ruptura': em_ruptura,
-    'proximo_a_ruptura': proximo_a_ruptura
-}
-
-with open( 'estoque.json','w', encoding='utf-8' ) as arquivo:
-    json.dump(dados, arquivo, ensure_ascii=False, indent=4)
+salvar_estoque(em_ruptura,proximo_a_ruptura)
