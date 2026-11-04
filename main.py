@@ -1,6 +1,6 @@
-from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
+from entrada import perguntar_sim_ou_nao, pedir_nome
 from exibicao import mostrar_tabela
-from estoque import remover_item
+from estoque import remover_item, cadastrar_produto
 from armazenamento import salvar_estoque,carregar_estoque
 
 em_ruptura, proximo_a_ruptura = carregar_estoque()
@@ -46,54 +46,23 @@ else:
 
     print('Nenhum produto registrado. Iniciando programa...')
 
-    # primeira execução: começa com as listas vazias
-    em_ruptura = []
-    proximo_a_ruptura = []
-
-
-resposta = perguntar_sim_ou_nao('existe algum produto em ruptura na sua loja?(sim/não) ')
-
-# Executa a adição de dados caso a resposta seja sim
-while resposta == 'sim':
-    produto = pedir_nome('Digite o nome do produto: ')
-
-    dias = pedir_numero('Digite quantos dias esta em ruptura:')
-
-    print(f'confirme os dados:\n produto: {produto} em falta: {dias} dias')
-    entrada = perguntar_sim_ou_nao('Esta correto?(sim/nao) ')
-
-    if entrada == 'sim':
-
-      # adiciona os dados a lista
-      em_ruptura.append({'produto': produto, 'dias': dias})
-
-      resposta = perguntar_sim_ou_nao('Existe mais algum produto em ruptura?(sim/nao) ')
-    # caso o produto esteja incorreto não adiciona na lista e retorna para cadastrar outro produto
-    else:
-
-        print('Cadastro descartado. Digite os dados novamente')
 
 resposta = perguntar_sim_ou_nao('Existe algum produto próximo a ruptura?(sim/nao) ')
 
 while resposta == "sim":
 
-    produto = pedir_nome('Digite o nome do produto: ')
+    cadastrar_produto(proximo_a_ruptura,'quantidade','Digite a quantidade no estoque: ' )
 
-    quantidade = pedir_numero('Digite a quantidade do produto no estoque: ')
+    resposta = perguntar_sim_ou_nao('Existe mais algum produto proximo a ruptura?(sim/nao): ')
 
-    print(f'Confirme os dados :  produto: {produto} tem {quantidade} unidades em estoque')
+resposta_2 = perguntar_sim_ou_nao('Exite  algum produto em ruptura?(sim/nao): ')
 
-    entrada = perguntar_sim_ou_nao('Esta correto ?(sim/nao) ')
+while resposta_2 == "sim":
 
-    if entrada == 'sim':
+    cadastrar_produto(em_ruptura,'dias','Quantos dias esta em falta?: ')
 
-        proximo_a_ruptura.append({'produto': produto, 'quantidade': quantidade})
+    resposta_2 = perguntar_sim_ou_nao('Existe mais algum produto em ruptura?(sim/nao): ')
 
-        resposta = perguntar_sim_ou_nao('Existe mais algum produto próximo a ruptura?(sim/nao) ')
-
-    else:
-
-        print('Cadastro descartado. Digite os dados novamente')
 
 print('Obrigado pela resposta')
 mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
