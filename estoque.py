@@ -30,9 +30,15 @@ def cadastrar_produto(lista,outra_lista,tipo,descricao):
 
         produto = pedir_nome("Digite o nome do produto: ")
 
-        if existe_na_lista(lista,produto) or existe_na_lista(outra_lista,produto):
+        if existe_na_lista(lista,produto):
 
-            print(f'{produto} ja existe em uma das listas')
+            print(f'{produto} ja existe na lista proximo a ruptura')
+
+            continue
+
+        elif existe_na_lista(outra_lista,produto):
+
+            print(f'{produto} ja existe na lista em ruptura')
 
             continue
 
