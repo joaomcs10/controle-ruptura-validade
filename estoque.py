@@ -23,12 +23,19 @@ def remover_item(lista, nome):
 
     return None
 
-def cadastrar_produto(lista,tipo,descricao):
+def cadastrar_produto(lista,outra_lista,tipo,descricao):
     """Cadastra produtos no sistema"""
 
     while True:
 
         produto = pedir_nome("Digite o nome do produto: ")
+
+        if existe_na_lista(lista,produto) or existe_na_lista(outra_lista,produto):
+
+            print(f'{produto} ja existe em uma das listas')
+
+            continue
+
 
         valor = pedir_numero(descricao)
 
@@ -46,3 +53,7 @@ def cadastrar_produto(lista,tipo,descricao):
 
         print('Cadastro descartado. Digite os dados novamente')
 
+def existe_na_lista(lista,produto):
+    """Devolve True se ja existe um produto com esse nome na lista"""
+
+    return any(item['produto'].lower() == produto.lower() for item in lista)

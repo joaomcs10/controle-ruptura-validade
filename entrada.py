@@ -27,15 +27,26 @@ def pedir_numero(pergunta):
 def pedir_nome(pergunta):
     """Impede que seja deixado em branco a entrada"""
 
-    nome = input(pergunta).strip()
 
-    while nome == '':
+    while True:
 
-        print('O nome nao pode ficar vazio')
+        nome = input('Digite o nome do produto: ')
 
-        nome = input(pergunta).strip()
+        if not nome:
 
-    return nome
+            print('Nome invalido.Não aceita resposta em branco.')
+
+        elif not all(caracter.isalnum() or caracter in ' -' for caracter in nome):
+
+            print('Nome invalido. Use letras, numeros, espaço e hifen')
+
+        elif not any(c.isalpha() for c in nome):
+
+            print('Nome invalido. Prescisa ter pelo menos uma letra')
+
+        else:
+
+            return nome
 
 
 def mostrar_tabela(titulo, lista, chave, rotulo):
