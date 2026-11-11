@@ -51,7 +51,7 @@ resposta = perguntar_sim_ou_nao('Existe algum produto próximo a ruptura?(sim/na
 
 while resposta == "sim":
 
-    cadastrar_produto(proximo_a_ruptura,em_ruptura,'quantidade','Digite a quantidade no estoque: ' )
+    cadastrar_produto(em_ruptura,proximo_a_ruptura,'quantidade','Digite a quantidade no estoque: ' )
 
     resposta = perguntar_sim_ou_nao('Existe mais algum produto proximo a ruptura?(sim/nao): ')
 

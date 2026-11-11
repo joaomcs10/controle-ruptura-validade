@@ -23,25 +23,22 @@ def remover_item(lista, nome):
 
     return None
 
-def cadastrar_produto(lista,outra_lista,tipo,descricao):
-    """Cadastra produtos no sistema"""
+def cadastrar_produto(em_ruptura,proximo_a_ruptura,tipo,descricao):
+    """Cadastra produto recusando produtos que ja existem em outra lista"""
+
+    destino = proximo_a_ruptura if tipo == 'quantidade' else em_ruptura
 
     while True:
 
         produto = pedir_nome("Digite o nome do produto: ")
 
-        if existe_na_lista(lista,produto):
+        local = onde_esta(produto, em_ruptura, proximo_a_ruptura)
 
-            print(f'{produto} ja existe na lista proximo a ruptura')
+        if local is not None:
 
-            continue
-
-        elif existe_na_lista(outra_lista,produto):
-
-            print(f'{produto} ja existe na lista em ruptura')
+            print(f'{produto} ja existe na lista {local}.')
 
             continue
-
 
         valor = pedir_numero(descricao)
 
@@ -51,7 +48,7 @@ def cadastrar_produto(lista,outra_lista,tipo,descricao):
 
         if confirmacao == 'sim':
 
-            lista.append({'produto': produto, tipo: valor})
+            destino.append({'produto': produto, tipo: valor})
 
             print('Produto cadastrado com sucesso!')
 
@@ -63,3 +60,17 @@ def existe_na_lista(lista,produto):
     """Devolve True se ja existe um produto com esse nome na lista"""
 
     return any(item['produto'].lower() == produto.lower() for item in lista)
+
+
+def onde_esta(nome,em_ruptura, proximo_a_ruptura):
+    """Devolve 'Em ruptura', 'Proximo a ruptura' ou None, conforme a lista que o nome está.''"""
+
+    if existe_na_lista(em_ruptura,nome):
+
+        return 'Em ruptura'
+
+    if existe_na_lista(proximo_a_ruptura,nome):
+
+        return 'Proximo a ruptura'
+
+    return None
