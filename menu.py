@@ -1,9 +1,9 @@
-from entrada import pedir_numero,pedir_nome
+from entrada import pedir_numero, pedir_nome
 from estoque import onde_esta
-from exibicao import em_construcao, mostrar_cabecalho
+from exibicao import em_construcao, mostrar_cabecalho, pausa
 
 
-def menu_principal():
+def menu_principal(em_ruptura,proximo_a_ruptura):
 
     while True:
 
@@ -17,7 +17,7 @@ def menu_principal():
         opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
-            menu_informacoes()
+            menu_informacoes(em_ruptura,proximo_a_ruptura)
 
         elif opcao == 2:
             menu_adicionar()
@@ -35,7 +35,7 @@ def menu_principal():
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_informacoes():
+def menu_informacoes(em_ruptura,proximo_a_ruptura):
 
 
     while True:
@@ -51,7 +51,18 @@ def menu_informacoes():
 
         if opcao == 1:
 
-            em_construcao()
+            nome= pedir_nome('digite o nome do produto: ')
+            local = onde_esta(nome,em_ruptura,proximo_a_ruptura)
+
+            if local is None:
+
+                print(f'O {nome} não está cadastrado')
+
+            else:
+
+                print(f'O {nome} está cadastrado em {local}')
+
+            pausa()
 
         elif opcao == 2:
             em_construcao()
@@ -67,7 +78,7 @@ def menu_informacoes():
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_adicionar():
+def menu_adicionar(em_ruptura,proximo_a_ruptura):
 
     while True:
 
@@ -97,7 +108,7 @@ def menu_adicionar():
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_excluir():
+def menu_excluir(em_ruptura,proximo_a_ruptura):
 
     while True:
 
@@ -126,3 +137,9 @@ def menu_excluir():
         else:
 
             print('Entrada invalida! Escolha uma opção do menu')
+
+if __name__ == '__main__':
+    from armazenamento import carregar_estoque
+
+    em_ruptura, proximo_a_ruptura = carregar_estoque()
+    menu_principal(em_ruptura, proximo_a_ruptura)

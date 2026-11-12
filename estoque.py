@@ -71,6 +71,6 @@ def onde_esta(nome,em_ruptura, proximo_a_ruptura):
 
     if existe_na_lista(proximo_a_ruptura,nome):
 
-        return 'Proximo a ruptura'
+        return 'proximo a ruptura'
 
     return None
