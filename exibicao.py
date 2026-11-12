@@ -27,7 +27,7 @@ def mostrar_cabecalho(titulo):
 
     print('-+' * 30)
 
-def pausa():
+def pausar():
     """Espera o usuario aperta Enter, para dar tempo de ler o resultado"""
 
     input('\n Aperte enter para continuar...')

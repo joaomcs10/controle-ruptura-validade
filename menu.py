@@ -1,10 +1,9 @@
-from entrada import pedir_numero, pedir_nome
+from entrada import pedir_numero, pedir_nome, mostrar_tabela
 from estoque import onde_esta
-from exibicao import em_construcao, mostrar_cabecalho, pausa
+from exibicao import em_construcao, mostrar_cabecalho, pausar
 
 
-def menu_principal(em_ruptura,proximo_a_ruptura):
-
+def menu_principal(em_ruptura, proximo_a_ruptura):
     while True:
 
         mostrar_cabecalho('Menu Principal')
@@ -17,7 +16,7 @@ def menu_principal(em_ruptura,proximo_a_ruptura):
         opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
-            menu_informacoes(em_ruptura,proximo_a_ruptura)
+            menu_informacoes(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 2:
             menu_adicionar()
@@ -35,9 +34,8 @@ def menu_principal(em_ruptura,proximo_a_ruptura):
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_informacoes(em_ruptura,proximo_a_ruptura):
 
-
+def menu_informacoes(em_ruptura, proximo_a_ruptura):
     while True:
 
         mostrar_cabecalho('Menu Informações')
@@ -47,12 +45,12 @@ def menu_informacoes(em_ruptura,proximo_a_ruptura):
         print('\n 3 - consultar tudo ')
         print('\n 4 - voltar')
 
-        opcao  = pedir_numero('Escolha uma opção: ')
+        opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
 
-            nome= pedir_nome('digite o nome do produto: ')
-            local = onde_esta(nome,em_ruptura,proximo_a_ruptura)
+            nome = pedir_nome('digite o nome do produto: ')
+            local = onde_esta(nome, em_ruptura, proximo_a_ruptura)
 
             if local is None:
 
@@ -62,10 +60,41 @@ def menu_informacoes(em_ruptura,proximo_a_ruptura):
 
                 print(f'O {nome} está cadastrado em {local}')
 
-            pausa()
+            pausar()
 
         elif opcao == 2:
-            em_construcao()
+
+            while True:
+
+                print('\n 1 - Em Ruptura')
+                print(' 2 - Próximo a Ruptura')
+                print(' 3 - Voltar')
+                escolha = pedir_numero(' Escolha uma opção: ')
+
+                if escolha == 1:
+
+                    mostrar_tabela('Produto Em Ruptura', em_ruptura, 'dias', 'DIAS')
+
+                    pausar()
+
+                    break
+
+                elif escolha == 2:
+
+                    mostrar_tabela('Próximo a Ruptura', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
+
+                    pausar()
+
+                    break
+
+                elif escolha == 3:
+
+                    break
+
+                else:
+
+                    print('Opção invalida. tente novamente')
+
 
         elif opcao == 3:
             em_construcao()
@@ -78,8 +107,8 @@ def menu_informacoes(em_ruptura,proximo_a_ruptura):
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_adicionar(em_ruptura,proximo_a_ruptura):
 
+def menu_adicionar(em_ruptura, proximo_a_ruptura):
     while True:
 
         mostrar_cabecalho('Menu Adicionar')
@@ -89,7 +118,7 @@ def menu_adicionar(em_ruptura,proximo_a_ruptura):
         print('\n 3 - adicionar proximo a validade ')
         print('\n 4 - voltar')
 
-        opcao  = pedir_numero('Escolha uma opção: ')
+        opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
             em_construcao()
@@ -108,8 +137,8 @@ def menu_adicionar(em_ruptura,proximo_a_ruptura):
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-def menu_excluir(em_ruptura,proximo_a_ruptura):
 
+def menu_excluir(em_ruptura, proximo_a_ruptura):
     while True:
 
         mostrar_cabecalho('Menu Excluir')
@@ -119,7 +148,7 @@ def menu_excluir(em_ruptura,proximo_a_ruptura):
         print('\n 3 - excluir proximo a validade ')
         print('\n 4 - voltar')
 
-        opcao  = pedir_numero('Escolha uma opção: ')
+        opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
             em_construcao()
@@ -137,6 +166,7 @@ def menu_excluir(em_ruptura,proximo_a_ruptura):
         else:
 
             print('Entrada invalida! Escolha uma opção do menu')
+
 
 if __name__ == '__main__':
     from armazenamento import carregar_estoque
