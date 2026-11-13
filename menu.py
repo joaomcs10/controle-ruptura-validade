@@ -1,5 +1,5 @@
 from entrada import pedir_numero, pedir_nome, mostrar_tabela
-from estoque import onde_esta
+from estoque import onde_esta, cadastrar_produto
 from exibicao import em_construcao, mostrar_cabecalho, pausar
 
 
@@ -19,7 +19,7 @@ def menu_principal(em_ruptura, proximo_a_ruptura):
             menu_informacoes(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 2:
-            menu_adicionar()
+            menu_adicionar(em_ruptura,proximo_a_ruptura)
 
         elif opcao == 3:
             menu_excluir()
@@ -73,7 +73,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
                 if escolha == 1:
 
-                    mostrar_tabela('Produto Em Ruptura', em_ruptura, 'dias', 'DIAS')
+                    mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
 
                     pausar()
 
@@ -81,7 +81,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
                 elif escolha == 2:
 
-                    mostrar_tabela('Próximo a Ruptura', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
+                    mostrar_tabela('PRODUTOS PRÓXIMO A RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
 
                     pausar()
 
@@ -89,7 +89,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
                 elif escolha == 3:
 
-                    break
+                   break
 
                 else:
 
@@ -97,7 +97,12 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
 
         elif opcao == 3:
-            em_construcao()
+
+            mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
+            mostrar_tabela('PRODUTOS PRÓXIMO A RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
+
+            pausar()
+
 
         elif opcao == 4:
 
@@ -121,7 +126,17 @@ def menu_adicionar(em_ruptura, proximo_a_ruptura):
         opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
-            em_construcao()
+           nome = cadastrar_produto(em_ruptura,proximo_a_ruptura,'dias','Quantos dias esta em falta? ')
+           if nome is not None:
+               salvar_estoque(em_ruptura,proximo_a_ruptura)
+
+               print(f'O {nome} foi cadastrado com sucesso')
+
+               pausar()
+
+           else:
+
+               print('Voltando ao menu anterior...')
 
         elif opcao == 2:
             em_construcao()
@@ -169,7 +184,7 @@ def menu_excluir(em_ruptura, proximo_a_ruptura):
 
 
 if __name__ == '__main__':
-    from armazenamento import carregar_estoque
+    from armazenamento import carregar_estoque, salvar_estoque
 
     em_ruptura, proximo_a_ruptura = carregar_estoque()
     menu_principal(em_ruptura, proximo_a_ruptura)

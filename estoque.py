@@ -1,5 +1,5 @@
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
-
+from exibicao import pausar
 
 def remover_item(lista, nome):
     for item in lista:
@@ -30,9 +30,13 @@ def cadastrar_produto(em_ruptura,proximo_a_ruptura,tipo,descricao):
 
     while True:
 
-        produto = pedir_nome("Digite o nome do produto: ")
+        produto = pedir_nome('Digite o nome do produto ou "voltar" para sair: ')
 
         local = onde_esta(produto, em_ruptura, proximo_a_ruptura)
+
+        if produto.lower() == 'voltar':
+
+            return None
 
         if local is not None:
 
@@ -50,9 +54,7 @@ def cadastrar_produto(em_ruptura,proximo_a_ruptura,tipo,descricao):
 
             destino.append({'produto': produto, tipo: valor})
 
-            print('Produto cadastrado com sucesso!')
-
-            break
+            return produto
 
         print('Cadastro descartado. Digite os dados novamente')
 
