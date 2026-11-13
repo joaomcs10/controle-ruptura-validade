@@ -3,6 +3,23 @@ from estoque import onde_esta, cadastrar_produto
 from exibicao import em_construcao, mostrar_cabecalho, pausar
 
 
+def cadastrar_e_salvar(em_ruptura, proximo_a_ruptura, tipo, descricao):
+    """cadastra um produto, grava no arquivo e e avisa que foi salvo
+       se o usuario desistir não salva nada"""
+
+    nome = cadastrar_produto(em_ruptura, proximo_a_ruptura, 'dias', 'Quantos dias esta em falta? ')
+    if nome is not None:
+        salvar_estoque(em_ruptura, proximo_a_ruptura)
+
+        print(f'O {nome} foi cadastrado com sucesso')
+
+        pausar()
+
+    else:
+
+        print('Voltando ao menu anterior...')
+
+
 def menu_principal(em_ruptura, proximo_a_ruptura):
     while True:
 
@@ -19,7 +36,7 @@ def menu_principal(em_ruptura, proximo_a_ruptura):
             menu_informacoes(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 2:
-            menu_adicionar(em_ruptura,proximo_a_ruptura)
+            menu_adicionar(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 3:
             menu_excluir()
@@ -89,7 +106,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
                 elif escolha == 3:
 
-                   break
+                    break
 
                 else:
 
@@ -126,17 +143,9 @@ def menu_adicionar(em_ruptura, proximo_a_ruptura):
         opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
-           nome = cadastrar_produto(em_ruptura,proximo_a_ruptura,'dias','Quantos dias esta em falta? ')
-           if nome is not None:
-               salvar_estoque(em_ruptura,proximo_a_ruptura)
 
-               print(f'O {nome} foi cadastrado com sucesso')
+            cadastrar_e_salvar(em_ruptura,proximo_a_ruptura,'dias','Quantos dias esta em falta?')
 
-               pausar()
-
-           else:
-
-               print('Voltando ao menu anterior...')
 
         elif opcao == 2:
             em_construcao()
