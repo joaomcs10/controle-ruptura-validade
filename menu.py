@@ -1,13 +1,14 @@
 from entrada import pedir_numero, pedir_nome, mostrar_tabela
 from estoque import onde_esta, cadastrar_produto
 from exibicao import em_construcao, mostrar_cabecalho, pausar
+from armazenamento import salvar_estoque
 
 
 def cadastrar_e_salvar(em_ruptura, proximo_a_ruptura, tipo, descricao):
     """cadastra um produto, grava no arquivo e e avisa que foi salvo
        se o usuario desistir não salva nada"""
 
-    nome = cadastrar_produto(em_ruptura, proximo_a_ruptura, 'dias', 'Quantos dias esta em falta? ')
+    nome = cadastrar_produto(em_ruptura, proximo_a_ruptura,tipo,descricao)
     if nome is not None:
         salvar_estoque(em_ruptura, proximo_a_ruptura)
 
@@ -144,11 +145,11 @@ def menu_adicionar(em_ruptura, proximo_a_ruptura):
 
         if opcao == 1:
 
-            cadastrar_e_salvar(em_ruptura,proximo_a_ruptura,'dias','Quantos dias esta em falta?')
+            cadastrar_e_salvar(em_ruptura,proximo_a_ruptura,'dias','Quantos dias esta em falta?  ')
 
 
         elif opcao == 2:
-            em_construcao()
+            cadastrar_e_salvar(em_ruptura,proximo_a_ruptura,'quantidade', 'Qual a quantidade no estoque? ')
 
         elif opcao == 3:
             em_construcao()
