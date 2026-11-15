@@ -1,7 +1,8 @@
-from entrada import pedir_numero, pedir_nome, mostrar_tabela
+from entrada import pedir_numero, pedir_nome
 from estoque import onde_esta, cadastrar_produto
-from exibicao import em_construcao, mostrar_cabecalho, pausar
-from armazenamento import salvar_estoque
+from exibicao import em_construcao, mostrar_cabecalho, pausar, mostrar_tabela
+from armazenamento import salvar_estoque,carregar_estoque
+
 
 
 def cadastrar_e_salvar(em_ruptura, proximo_a_ruptura, tipo, descricao):
@@ -192,9 +193,8 @@ def menu_excluir(em_ruptura, proximo_a_ruptura):
 
             print('Entrada invalida! Escolha uma opção do menu')
 
-
 if __name__ == '__main__':
-    from armazenamento import carregar_estoque, salvar_estoque
+    from armazenamento import carregar_estoque
 
     em_ruptura, proximo_a_ruptura = carregar_estoque()
     menu_principal(em_ruptura, proximo_a_ruptura)

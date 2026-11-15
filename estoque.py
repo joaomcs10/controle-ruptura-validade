@@ -1,5 +1,5 @@
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
-from exibicao import pausar
+
 
 def remover_item(lista, nome):
     for item in lista:
