@@ -1,5 +1,5 @@
-from entrada import pedir_numero, pedir_nome
-from estoque import onde_esta, cadastrar_produto
+from entrada import pedir_numero, pedir_nome, perguntar_sim_ou_nao
+from estoque import onde_esta, cadastrar_produto, remover_item
 from exibicao import em_construcao, mostrar_cabecalho, pausar, mostrar_tabela
 from armazenamento import salvar_estoque,carregar_estoque
 
@@ -21,6 +21,23 @@ def cadastrar_e_salvar(em_ruptura, proximo_a_ruptura, tipo, descricao):
 
         print('Voltando ao menu anterior...')
 
+def remover_e_salvar(em_ruptura,proximo_a_ruptura,lista):
+    """pede um nome, remove da lista escolhida e grava no arquivo.
+    o usuario pode desistir digitando 'voltar.'"""
+
+    nome = pedir_nome('Digite o nome do produto que deseja remover ou "voltar" para sair:  ')
+
+    if nome.lower() == 'voltar':
+
+        return
+    removido = remover_item(lista,nome)
+
+    if removido is not None:
+
+        salvar_estoque(em_ruptura,proximo_a_ruptura)
+
+    pausar()
+
 
 def menu_principal(em_ruptura, proximo_a_ruptura):
     while True:
@@ -41,7 +58,7 @@ def menu_principal(em_ruptura, proximo_a_ruptura):
             menu_adicionar(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 3:
-            menu_excluir()
+            menu_excluir(em_ruptura, proximo_a_ruptura)
 
         elif opcao == 4:
 
@@ -177,10 +194,11 @@ def menu_excluir(em_ruptura, proximo_a_ruptura):
         opcao = pedir_numero('Escolha uma opção: ')
 
         if opcao == 1:
-            em_construcao()
+
+            remover_e_salvar(em_ruptura,proximo_a_ruptura,em_ruptura)
 
         elif opcao == 2:
-            em_construcao()
+            remover_e_salvar(em_ruptura,proximo_a_ruptura,proximo_a_ruptura)
 
         elif opcao == 3:
             em_construcao()

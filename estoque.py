@@ -2,6 +2,13 @@ from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
 
 
 def remover_item(lista, nome):
+    """Remove produto da lista,depois de pedir confirmação.
+    Devolve o item removido, ou None se cancelou,desistiu ou não achou"""
+
+    if nome.lower() == 'voltar':
+
+        return None
+
     for item in lista:
 
         if item['produto'].lower() == nome.lower():
@@ -9,11 +16,11 @@ def remover_item(lista, nome):
             confirmar = perguntar_sim_ou_nao(f"Deseja realmente remover {item['produto']}(sim/não)?")
 
             if confirmar == 'sim':
-                lista.remove(item)
+                  lista.remove(item)
 
-                print('Item removido com sucesso.')
+                  print('Item removido com sucesso.')
 
-                return item
+                  return item
 
             print('Remoção cancelada.')
 
