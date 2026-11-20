@@ -1,4 +1,5 @@
 from entrada import perguntar_sim_ou_nao, pedir_nome, pedir_numero
+from datetime import date, timedelta
 
 
 def remover_item(lista, nome):
@@ -83,3 +84,21 @@ def onde_esta(nome,em_ruptura, proximo_a_ruptura):
         return 'proximo a ruptura'
 
     return None
+
+
+def calcular_data_inicio(days):
+    """Devolve , em texto ISO,a data de 'dias' dias atras"""
+
+    hoje = date.today()
+    data_inicial = hoje -timedelta(days)
+
+    return data_inicial.isoformat()
+
+def calcular_dias(data_inicial):
+    """recebe a data de inicio em ISO e devolve a quantos dias ela ocorreu"""
+
+    hoje = date.today()
+    inicio = date.fromisoformat(data_inicial)
+    diferenca = hoje - inicio
+
+    return diferenca.days
