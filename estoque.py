@@ -102,3 +102,16 @@ def calcular_dias(data_inicial):
     diferenca = hoje - inicio
 
     return diferenca.days
+
+def preparar_ruptura(em_ruptura):
+    """Devolve uma lista nova, com produtos e dias calculados, para mostrar na tabela"""
+
+    lista_pronta = []
+
+    for item in em_ruptura:
+
+        dias = calcular_dias(item['data_inicio'])
+        novo = {'produto': item['produto'], 'dias': dias}
+        lista_pronta.append(novo)
+
+    return lista_pronta
