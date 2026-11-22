@@ -14,14 +14,19 @@ def salvar_estoque(em_ruptura,proximo_a_ruptura):
 
 
 def carregar_estoque():
-    """Lê estoque.json e devolve as duas listas. Sem arquivo. devolve as duas listas vazias"""
+    """Devolve duas listas e um aviso. O aviso e None se esta tudo certo"""
     if not os.path.isfile('estoque.json'):
 
-        return [], []
+        return [], [], None
 
-    with open('estoque.json', 'r', encoding='utf-8') as arquivo:
+    try:
 
-        dados = json.load(arquivo)
+        with open('estoque.json', 'r', encoding='utf-8') as arquivo:
+            dados = json.load(arquivo)
 
-    return dados['em_ruptura'], dados['proximo_a_ruptura']
+    except json.JSONDecodeError:
+
+        return [], [], 'O estoque.jason está vazio ou corrompido. Iniciando com listas vazias'
+
+    return dados['em_ruptura'], dados['proximo_a_ruptura'], None
 
