@@ -1,5 +1,5 @@
 from entrada import pedir_numero, pedir_nome, perguntar_sim_ou_nao
-from estoque import onde_esta, cadastrar_produto, remover_item
+from estoque import onde_esta, cadastrar_produto, remover_item, preparar_ruptura
 from exibicao import em_construcao, mostrar_cabecalho, pausar, mostrar_tabela
 from armazenamento import salvar_estoque,carregar_estoque
 
@@ -109,7 +109,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
                 if escolha == 1:
 
-                    mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
+                    mostrar_tabela('PRODUTOS EM RUPTURA', preparar_ruptura(em_ruptura), 'dias', 'DIAS')
 
                     pausar()
 
@@ -134,7 +134,7 @@ def menu_informacoes(em_ruptura, proximo_a_ruptura):
 
         elif opcao == 3:
 
-            mostrar_tabela('PRODUTOS EM RUPTURA', em_ruptura, 'dias', 'DIAS')
+            mostrar_tabela('PRODUTOS EM RUPTURA', preparar_ruptura(em_ruptura), 'dias', 'DIAS')
             mostrar_tabela('PRODUTOS PRÓXIMO A RUPTURA', proximo_a_ruptura, 'quantidade', 'QUANTIDADE')
 
             pausar()

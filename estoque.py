@@ -60,7 +60,14 @@ def cadastrar_produto(em_ruptura,proximo_a_ruptura,tipo,descricao):
 
         if confirmacao == 'sim':
 
-            destino.append({'produto': produto, tipo: valor})
+            if tipo == 'dias':
+
+                registro = {'produto': produto,'data_inicio':calcular_data_inicio(valor)}
+            else:
+
+                registro = {'produto': produto,'quantidade': valor}
+
+            destino.append(registro)
 
             return produto
 
