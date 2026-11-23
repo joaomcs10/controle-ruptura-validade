@@ -1,7 +1,7 @@
-from entrada import pedir_numero, pedir_nome, perguntar_sim_ou_nao
+from entrada import pedir_numero, pedir_nome
 from estoque import onde_esta, cadastrar_produto, remover_item, preparar_ruptura
 from exibicao import em_construcao, mostrar_cabecalho, pausar, mostrar_tabela
-from armazenamento import salvar_estoque,carregar_estoque
+from armazenamento import salvar_estoque
 
 
 
@@ -214,5 +214,5 @@ def menu_excluir(em_ruptura, proximo_a_ruptura):
 if __name__ == '__main__':
     from armazenamento import carregar_estoque
 
-    em_ruptura, proximo_a_ruptura = carregar_estoque()
+    em_ruptura, proximo_a_ruptura , _ = carregar_estoque()
     menu_principal(em_ruptura, proximo_a_ruptura)
