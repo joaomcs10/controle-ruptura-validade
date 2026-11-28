@@ -80,6 +80,58 @@ Por causa disso, **não foi implementado** o movimento de um produto entre as li
 - Controle de validade ainda não implementado.
 - Não há aviso ao abrir o programa (ver decisões de projeto).
 - Se o `estoque.json` estiver corrompido, o programa inicia vazio e o próximo salvamento sobrescreve o arquivo; não há cópia de segurança.
+- Não existem usuários nem perfis: qualquer pessoa que abre o programa pode alterar tudo.
+- Não há testes automatizados (planejado com `pytest`).
+
+## Planejamento das versões v2 e v3 (ainda não implementado)
+
+Esta seção descreve o desenho previsto. Nada disto existe no código atual.
+
+### Usuários e hierarquia
+
+O sistema terá usuários com perfis e uma hierarquia em árvore, em dois ramos paralelos. Cada pessoa tem **um chefe direto**:
+
+```
+Administrador geral
+ ├── Supervisor de promotoria → Líder → Promotor
+ └── Administrador de vendas (atua somente no ramo de vendas)
+       └── Supervisor de vendas → Líder de vendas → Vendedor
+```
+
+Os dois ramos cabem em uma única tabela de usuários, com uma coluna que aponta para o chefe direto e outra que indica o ramo (promotoria ou vendas).
+
+### Permissões: o que pode fazer × sobre quais dados
+
+| Ramo | Perfis | Pode | Enxerga |
+|---|---|---|---|
+| Promotoria | Administrador, supervisor, líder e promotor | Ler e alterar | A própria subárvore e as lojas da rota |
+| Vendas | Vendedor, líder e supervisor de vendas | Somente ler os dados dos promotores | As lojas da rede que atendem: alertas, promotores do dia, responsáveis e histórico |
+
+- Supervisores e líderes cadastram e excluem as pessoas da própria equipe (no ramo de vendas, o supervisor cuida dos líderes e o líder cuida dos vendedores).
+- O administrador de vendas gerencia apenas o ramo de vendas e não altera nada da promotoria.
+- Quem altera dados de ruptura e validade são os responsáveis pelos promotores.
+
+### Rotas e redes
+
+- **Promotor**: tem uma **rota**, que liga o promotor às lojas, com dia da semana e frequência (incluindo alternância). Uma loja pode ter um ou mais promotores fixos, e a **cobertura** é temporária e não ocupa vaga fixa.
+- **Vendedor**: não tem rota. Ele consulta **toda a rede** que atende, escolhe a loja que vai visitar e vê quem estará lá naquele dia.
+- **Loja fora da rota**: o promotor pode sinalizar que foi a uma loja fora da rota, e o aviso chega ao líder e ao supervisor, que são encontrados subindo a árvore a partir do promotor.
+
+### Histórico de alterações
+
+Cada registro de ruptura, próximo da ruptura e validade guardará **quem sinalizou, em que dia e quem alterou depois**. O histórico é uma tabela própria, com uma linha por alteração, e por isso o sistema **marca como retirado em vez de apagar**.
+
+### Entidades previstas
+
+Usuário, rede, loja, rota do promotor, vínculo do vendedor com a rede, registro (ruptura, próximo da ruptura e validade), histórico do registro e sinalização de fora de rota. Senhas serão guardadas com hash, nunca em texto.
+
+### Decisões em aberto
+
+1. A alternância de visitas é por **semana** (por exemplo, toda terça de duas em duas semanas) ou por **dias seguidos** alternados?
+2. O supervisor de promotoria também cadastra e exclui líderes?
+3. Existe um administrador só da promotoria, ou o administrador geral cobre os dois ramos?
+4. Um vendedor pode atender mais de uma rede?
+5. O líder de vendas vê o histórico de todas as redes da equipe ou só das que acompanha diretamente?
 
 ## Roadmap
 
@@ -89,8 +141,10 @@ Por causa disso, **não foi implementado** o movimento de um produto entre as li
 | v1.1 | Contagem automática dos dias em ruptura (esta versão) | datetime |
 | v1.2 | Controle de validade: data de vencimento, preço, rebaixa, retirada e níveis de urgência | datetime |
 | v1.5 | Refatoração com classes | POO |
-| v2 | Catálogo de produtos e banco de dados | SQL |
-| v3 | Páginas web para uso no celular, com painel de alertas | Flask |
+| v2.0 | Catálogo de produtos e banco de dados | SQL |
+| v2.1 | Usuários, hierarquia e ramos | SQL |
+| v2.2 | Redes, lojas e rotas | SQL |
+| v3 | Páginas web para uso no celular: login, perfis, telas de leitura, painel de alertas e aviso de loja fora da rota | Flask |
 | v4 | Relatórios em Excel | Pandas |
 
 ## O que estou aprendendo com o projeto
